@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Agri AI | Precision Crop Prediction</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- Optional Icons -->
+</head>
+<body>
+
+    <div class="background-overlay"></div>
+
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h1 data-i18n="title"><span class="highlight">Smart</span> Agri AI</h1>
+                <select id="language-switcher" class="lang-select">
+                    <option value="en">🇬🇧 English</option>
+                    <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
+                    <option value="ta">🇮🇳 தமிழ் (Tamil)</option>
+                </select>
+            </div>
+            <p data-i18n="subtitle">Predict the most profitable crop for your land using advanced AI.</p>
+        </header>
+
+        <main class="glass-panel">
+            <form id="agri-form">
+                
+                <div class="form-section">
+                    <h2 data-i18n="soil_info_title">🌱 Soil Information</h2>
+                    
+                    <div class="input-group">
+                        <label for="soil-color" data-i18n="soil_color">🎨 Soil Color</label>
+                        <select id="soil-color" required>
+                            <option value="" disabled selected data-i18n="select_color">Select soil color</option>
+                            <option value="Black">⚫ <span data-i18n="color_black">Black (Rich, fertile)</span></option>
+                            <option value="Red">🔴 <span data-i18n="color_red">Red (Iron-rich)</span></option>
+                            <option value="Brown">🟤 <span data-i18n="color_brown">Brown (Balanced)</span></option>
+                            <option value="Sandy">🟡 <span data-i18n="color_sandy">Sandy (Loose)</span></option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="soil-texture" data-i18n="soil_texture">🤏 Soil Texture</label>
+                        <select id="soil-texture" required>
+                            <option value="" disabled selected data-i18n="select_texture">Select texture</option>
+                            <option value="Sticky">🍯 <span data-i18n="tex_sticky">Sticky (Clay-like)</span></option>
+                            <option value="Soft">☁️ <span data-i18n="tex_soft">Soft (Loamy)</span></option>
+                            <option value="Grainy">🏖️ <span data-i18n="tex_grainy">Grainy (Sandy)</span></option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="water-retention" data-i18n="water_retention">💧 Water Retention</label>
+                        <select id="water-retention" required>
+                            <option value="" disabled selected data-i18n="select_retention">Select retention</option>
+                            <option value="High">🌊 <span data-i18n="ret_high">High (Stays wet long)</span></option>
+                            <option value="Medium">💦 <span data-i18n="ret_medium">Medium</span></option>
+                            <option value="Low">🏜️ <span data-i18n="ret_low">Low (Dries fast)</span></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 data-i18n="location_title">📍 Location & Weather</h2>
+                    <p class="helper-text" data-i18n="location_helper">We need your location to fetch real-time weather data.</p>
+                    <button type="button" id="btn-location" class="btn-secondary">
+                        🎯 <span data-i18n="btn_location">Get Current Location</span>
+                    </button>
+                    <div id="location-status" class="status-msg"></div>
+                    <input type="hidden" id="lat">
+                    <input type="hidden" id="lon">
+                </div>
+
+                <button type="submit" id="btn-predict" class="btn-primary" disabled>
+                    🚀 <span data-i18n="btn_predict">Predict Best Crop</span>
+                </button>
+            </form>
+
+            <div id="loading" class="hidden">
+                <div class="spinner"></div>
+                <p data-i18n="loading_text">Analyzing soil and weather data...</p>
+            </div>
+
+            <div id="results" class="hidden">
+                <h2 data-i18n="results_title">🤖 AI Prediction Results</h2>
+                
+                <div class="result-card primary-result">
+                    <h3 data-i18n="res_best_crop">🌾 Best Crop to Plant</h3>
+                    <div id="best-crop" class="huge-text">Wheat</div>
+                </div>
+
+                <div class="result-card">
+                    <h3 data-i18n="res_profitable">💰 Top 3 Profitable Alternatives</h3>
+                    <ul id="profitable-crops" class="crop-list">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+
+                <div class="result-card">
+                    <h3 data-i18n="res_env">🌦️ Environmental Snapshot</h3>
+                    <div class="env-stats">
+                        <div class="stat">
+                            <span class="label">Est. pH</span>
+                            <span class="val" id="res-ph">-</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Est. NPK</span>
+                            <span class="val" id="res-npk">-</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Temp</span>
+                            <span class="val" id="res-temp">-</span>
+                        </div>
+                        <div class="stat">
+                            <span class="label">Humidity</span>
+                            <span class="val" id="res-hum">-</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" id="btn-reset" class="btn-secondary mt-2">
+                    🔄 <span data-i18n="btn_reset">Start Over</span>
+                </button>
+            </div>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
